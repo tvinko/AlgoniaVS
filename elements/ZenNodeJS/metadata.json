@@ -1,0 +1,9 @@
+{
+    "name": "NodeJS",
+    "file": "ZenNodeJS",
+    "implementation": "ZenNodeJS",
+    "author": "TomazV",
+    "author_email": "tv@algonia.net",
+    "version": "1.0.0",
+    "isStandardNode": 1
+}

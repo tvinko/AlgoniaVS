@@ -1,0 +1,43 @@
+﻿<div id="dialog-form" title="Cloud properties">
+    <p>Script </p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <input type="hidden" id="TEXT">
+    <button class="button tiny radius expand secondary open-command-dialog">Add code</button>
+
+</div>
+
+<script>
+     $(document).ready(function() {
+        SetNameProperty(_diagram);
+        //SetOperatorProperty();
+
+        if (typeof GetElementProperty(_diagram, 'TEXT') !== typeof undefined)
+            $('#TEXT').val(chars.decode(GetElementProperty(_diagram, 'TEXT')));
+        else
+            $('#TEXT').val('');
+
+        createPropertyDialogClickEvent('elements/ZenDebugWrapper/ZenDebugWrapperDialog.html');
+     });
+
+    function save(code) {
+        $('#TEXT').val(code);
+    }
+
+    function SaveProperties() {
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+
+        var h = {};
+        SaveInputPropertyEncoded(h, 'TEXT');
+        return h;
+    }
+</script>

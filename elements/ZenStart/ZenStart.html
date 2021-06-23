@@ -1,0 +1,50 @@
+﻿<script>
+    SetNameProperty(_diagram);
+    //SetOperatorProperty();
+    SetInputElementProperty(_diagram, 'REPEATABLE', '1', 'select');
+    SetInputElementProperty(_diagram, 'DEPENDENCIES', '', 'input');
+    SetCheckBoxElementProperty(_diagram, 'ACTIVE', '1', '1');
+    
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        
+        SaveInputProperty(h, 'REPEATABLE');
+        SaveCheckboxProperty(h, 'ACTIVE', '1', '0');
+        return h;
+    }
+</script>
+
+<div id="dialog-form" title="Start properties">
+    <p>Start</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <label for="REPEATABLE">IsRepeatable</label>
+
+    <!--Select-->
+    <select id="REPEATABLE" style="width: 137px;">
+        <option selected="selected" value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <!--CheckBox-->
+    <label for="ACTIVE">Active</label><input type="checkbox" id="ACTIVE" value="ACTIVE" />
+    
+
+    <!--Input-->
+    <!--
+    <label for="DEPENDENCIES">Dependencies</label>
+    <input type="text" name="DEPENDENCIES" id="DEPENDENCIES" class="text ui-widget-content ui-corner-all">
+        -->
+    
+</div>
+

@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+/node_modules 
+/builds
+
+out/
+/release-builds
+AlgoniaEngine
+/build
+AlgoniaEngine.zip
+Elements.compiled
+version.txt
+.DS_Store
+settings.json

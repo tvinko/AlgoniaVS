@@ -1,0 +1,35 @@
+﻿<script>
+
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        
+        SaveInputProperty(h, 'SLEEP_TIME');
+        return h;
+    }
+
+    $(document).ready(function() {
+        SetNameProperty(_diagram);
+        //SetOperatorProperty();
+        SetInputElementProperty(_diagram, 'SLEEP_TIME', '', 'input');
+    });
+
+</script>
+
+<div id="dialog-form" title="Start properties">
+    <p>Start</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <label for="SLEEP_TIME">Time in ms</label>
+    <input type="text" name="SLEEP_TIME" id="SLEEP_TIME" class="text ui-widget-content ui-corner-all">
+</div>
+

@@ -1,0 +1,65 @@
+﻿<script>
+
+    function saveNodeJsScript(code) {
+        $('#NODEJS_SCRIPT_TEXT').val(code);
+    }
+
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveCheckboxProperty(h, 'DEBUG', '1', '0');
+        SaveInputPropertyEncoded(h, 'NODEJS_SCRIPT_TEXT');
+        SaveInputProperty(h, '_LOOP_BLOCKER_');
+        SaveInputProperty(h, '__ARG__');
+        return h;
+    }
+
+    $(document).ready(function () {
+        SetNameProperty(_diagram);
+        SetCheckBoxElementProperty(_diagram, 'DEBUG', '0', '1');
+        SetInputElementProperty(_diagram, '_LOOP_BLOCKER_', '0', 'select');
+        SetInputElementProperty(_diagram, '__ARG__', '', 'input');
+        
+        if (typeof GetElementProperty(_diagram, 'NODEJS_SCRIPT_TEXT') !== typeof undefined)
+            $('#NODEJS_SCRIPT_TEXT').val(chars.decode(GetElementProperty(_diagram, 'NODEJS_SCRIPT_TEXT')));
+        else
+            $('#NODEJS_SCRIPT_TEXT').val('');
+
+        createPropertyDialogClickEvent('elements/ZenNodeJS/ZenNodeJSDialog.html');
+    });
+</script>
+
+<div id="dialog-form" title="ML Context properties">
+    <p>Python</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <label for="_LOOP_BLOCKER_">Is Loop Blocker</label>
+    <select id="_LOOP_BLOCKER_" style="width: 137px;">
+        <option selected="selected" value="0">No</option>
+        <option value="1">Yes</option>
+    </select>
+    <br />
+    <br />
+
+    <br />
+    <br />
+
+    <input type="hidden" id="__ARG__">
+    <br />
+    <br />
+
+    <button class="button tiny radius expand secondary open-command-dialog">Add code</button>
+    <div><input type="checkbox" id="DEBUG"><label>Debug</label></div>
+
+    <input type="hidden" id="NODEJS_SCRIPT_TEXT">
+    
+</div>

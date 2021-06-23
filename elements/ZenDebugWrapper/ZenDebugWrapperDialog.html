@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Editor</title>
+</head>
+<body>
+    <script src="assets/scripts/ace-editor/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <div id="divElementsInfo"></div>
+    <script>
+        $(document).ready(function() 
+        {
+            $("#divElementsInfo").load("html_includes/elements_info.html", function(data)
+            {
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/html");
+                editor.setFontSize("17px");
+                editor.session.setMode("ace/mode/html");
+                if ($('#TEXT').val() == '' || $('#TEXT').val() == 'null')
+                    editor.setValue('');
+                else    
+                    editor.setValue($('#TEXT').val());    
+
+                $('#btnCloseEditor').on('click', function () {
+                    save(editor.getValue());
+                    editor.destroy();
+                    showDivs(_zen_divs,['#canvas','#main','#propertiesSidebar','#divSelectElements','#divSelectTemplates']);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

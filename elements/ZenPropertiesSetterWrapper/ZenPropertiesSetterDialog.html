@@ -1,0 +1,184 @@
+﻿<script>
+    $(document).ready(function() 
+    {
+        $("#divElementsInfo").load("html_includes/elements_info.html", function(data)
+        {
+            $('#btnCloseEditor').hide();
+            // Parse & prepare object for jsGrid binding from hidden field
+            var props2Set = [];
+            $.each($('#PROPS_2_SET').val().split(row_splitter), function( index, value ) {
+                var vals = value.split(col_splitter);
+                var propData = {};
+                if (vals[0] != '')
+                {
+                    propData.element = vals[0];
+                    propData.propertyId = vals[1];
+                    propData.propertyVal = vals[2];
+
+                    props2Set.push(propData);
+                }
+            });
+            
+            //Initialize jsGrid
+            initializeProps2SetGrid();
+            // Bind jsGrid
+            $("#grdPropToSet").jsGrid("option", "data", props2Set);
+
+            $('#btnClosePropToSet').on('click', function () {
+                $("#PROPS_2_SET").val('');
+                $.each($('#grdPropToSet').jsGrid("option", "data"), function( index, value ) 
+                {
+                    $("#PROPS_2_SET").val(
+                        $("#PROPS_2_SET").val() + 
+                        value.element + 
+                        col_splitter + 
+                        value.propertyId + 
+                        col_splitter + 
+                        value.propertyVal +
+                        row_splitter);
+                });
+                showDivs(_zen_divs,['#canvas','#main','#propertiesSidebar','#divSelectElements','#divSelectTemplates']);
+                SaveProperties();
+            });
+        });
+
+        // jsGrid Initialization
+        function initializeProps2SetGrid(){
+            var nodesArr = [];
+            var nodes = _diagram.getNodes();
+            var properties = [];
+            for (var i in nodes) 
+            {
+                var node = {};
+                node.id = nodes[i].id;
+                node.label = nodes[i].settings.label;
+                nodesArr.push(node);
+                
+                $.each( nodes[i].settings.elementProperties, function(item, n){
+                    var prop = {};
+                    prop.id = item;
+                    properties.push(prop);
+                });
+            }
+
+            $("#grdPropToSet").jsGrid({
+                width: "950px",
+                height: "100%",
+                editing: true,
+                inserting: true,
+                fields: [
+                            { 
+                                name: "element", 
+                                title: "Element",
+                                type: "select", 
+                                items: nodesArr, 
+                                valueField: "id", 
+                                textField: "label"/*,
+                                insertTemplate: function () 
+                                {
+                                    var grid = this._grid;
+                                    var $result = jsGrid.fields.select.prototype.insertTemplate.call(this);
+
+                                    $result.on("change", function() {
+                                        var propIdsFieldIndex = 1;
+                                        var sel = grid.option("fields")[propIdsFieldIndex].insertControl[0];
+                                        sel.options.length = 0
+                                        
+                                        var elProps = _diagram.getNodes().find(
+                                            x => x.id == $result.val()).settings.elementProperties;
+                                    
+                                        $.each( elProps, function(prop, n){
+                                            var optProp = document.createElement("option");
+                                            optProp.value= prop;
+                                            optProp.innerHTML = prop;
+
+                                            sel.appendChild(optProp);
+                                        });
+                                        
+                                    });
+                                    return $result;
+                                }*/
+                            },
+                            { 
+                                title: "Property id",
+                                name: "propertyId", 
+                                type: "select",
+                                items: properties,
+                                valueField: "id", 
+                                textField: "id",
+                                width: 150/*,
+                                
+                                insertTemplate: function () {
+                                    // Retrieve the DOM element
+                                    // Note: prototype.insertTemplate
+                                    var $insertControl = jsGrid.fields.select.prototype.insertTemplate.call(this);
+
+                                    // Attach onchange listener !
+                                    $insertControl.change(function () {
+                                        var selectedValue = $(this).val();
+
+                                        console.log(selectedValue);
+                                        mySelectedVal = selectedValue;
+                                    });
+
+                                    return $insertControl;
+                                },
+                                itemTemplate: function(value, item) {
+                                    //console.log(value);
+                                    //console.log(item);
+                                    //console.log("************");
+
+                                    var $insertControl = jsGrid.fields.select.prototype.itemTemplate.call(this);
+                                    console.log($insertControl);
+                                    return $insertControl;    
+                                    
+                                }*/
+                            },
+                            { 
+                                title: "Property value",
+                                name: "propertyVal", 
+                                type: "text", 
+                                width: 150,
+                                itemTemplate: function(value, item) {
+
+                                    return chars.encode(value);
+                                }
+                                
+                            }/*,
+                            { 
+                                title: "Condition", 
+                                name: "condition", 
+                                type: "text", 
+                                width: 150,
+                                insertTemplate: function() {
+                                    var $result = jsGrid.fields.text.prototype.insertTemplate.call(this);
+                                    $result.val('true');
+                                    return $result;
+                                } 
+                            },
+                            { 
+                                title: "Order", 
+                                name: "order", 
+                                type: "number", 
+                                width: 50,
+                                insertTemplate: function() {
+                                    var $result = jsGrid.fields.text.prototype.insertTemplate.call(this);
+                                    $result.val('0');
+                                    return $result;
+                                }
+                            }*/,
+                            { 
+                                type: "control" 
+                            }
+                        ]
+            });
+        }
+});
+</script>
+
+<div id="propToSetWrapper" style="width:100%;height:100%;">
+    <div id="divElementsInfo"></div>
+
+    <button style="margin-left: 870px" id="btnClosePropToSet" >X</button>
+    <div id="grdPropToSet" ></div>
+</div>

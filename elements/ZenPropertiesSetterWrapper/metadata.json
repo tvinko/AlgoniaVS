@@ -1,0 +1,9 @@
+{
+    "name": "Properties setter",
+    "file": "ZenPropertiesSetterWrapper",
+    "implementation": "ZenPropertiesSetterWrapper",
+    "author": "TomazV",
+    "author_email": "tv@algonia.net",
+    "version": "1.0.0",
+    "isStandardNode": 1
+}

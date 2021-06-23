@@ -1,0 +1,38 @@
+﻿<script>
+    SetNameProperty(_diagram);
+    //SetOperatorProperty();
+    SetInputElementProperty(_diagram, 'ELEMENTS_TO_EXECUTE', '', 'input');
+    SetCheckBoxElementProperty(_diagram, 'PRINT_CODE', '0', '1');
+    SetCheckBoxElementProperty(_diagram, 'DO_DEBUG', '0', '1');
+
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveInputProperty(h, 'ELEMENTS_TO_EXECUTE');
+        SaveCheckboxProperty(h, 'PRINT_CODE', '1', '0');
+        SaveCheckboxProperty(h, 'DO_DEBUG', '1', '0');
+        
+        return h;
+    }
+
+    createPropertyDialogClickEvent('elements/ZenElementsExecuterWrapper/ZenElementsExecuterDialog.html');
+</script>
+
+<div id="dialog-form" title="Properties setter">
+    <p>ML Context</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+    <button class="button tiny radius expand secondary open-command-dialog ">Elements to execute</button>
+    <div><input type="checkbox" id="PRINT_CODE"><label>Print code</label></div>
+    <div><input type="checkbox" id="DO_DEBUG"><label>Debug</label></div>
+    <input type="hidden" id="ELEMENTS_TO_EXECUTE" />
+</div>
+

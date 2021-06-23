@@ -1,0 +1,9 @@
+{
+    "name": "Responder",
+    "file": "ZenRespond",
+    "implementation": "ZenRespond",
+    "author": "TomazV",
+    "author_email": "tv@algonia.net",
+    "version": "1.0.0",
+    "isStandardNode": 1
+}

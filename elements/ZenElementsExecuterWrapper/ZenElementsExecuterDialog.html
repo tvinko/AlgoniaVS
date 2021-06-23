@@ -1,0 +1,101 @@
+﻿<script>
+    $(document).ready(function() 
+    {
+        $("#divElementsInfo").load("html_includes/elements_info.html", function(data)
+        {
+            $('#btnCloseEditor').hide();
+            // Parse & prepare object for jsGrid binding from hidden field
+            var elements2Execute = [];
+            $.each($('#ELEMENTS_TO_EXECUTE').val().split(row_splitter), function( index, value ) {
+                var vals = value.split(col_splitter);
+                var propData = {};
+                if (vals[0] != '')
+                {
+                    propData.element = vals[0];
+                    propData.condition = vals[1];
+                    propData.order = vals[2];
+                    elements2Execute.push(propData);
+                }
+            });
+            
+            //Initialize jsGrid
+            initializeElements2ExecuteGrid();
+            // Bind jsGrid
+            $("#grdElementsToExetute").jsGrid("option", "data", elements2Execute);
+
+            $('#btnCloseElementsToExetute').on('click', function () {
+                $("#ELEMENTS_TO_EXECUTE").val('');
+                $.each($('#grdElementsToExetute').jsGrid("option", "data"), function( index, value ) 
+                {
+                    $("#ELEMENTS_TO_EXECUTE").val(
+                        $("#ELEMENTS_TO_EXECUTE").val() + 
+                        value.element + 
+                        col_splitter + 
+                        value.condition + 
+                        col_splitter + 
+                        value.order +
+                        row_splitter);
+                });
+                showDivs(_zen_divs,['#canvas','#main','#propertiesSidebar','#divSelectElements','#divSelectTemplates']);
+                SaveProperties();
+            });
+        });
+
+        // jsGrid Initialization
+        function initializeElements2ExecuteGrid(){
+            var nodesArr = [];
+            var nodes = _diagram.getNodes();
+            var properties = [];
+            for (var i in nodes) 
+            {
+                var node = {};
+                node.id = nodes[i].id;
+                node.label = nodes[i].settings.label;
+                nodesArr.push(node);
+            }
+
+            $("#grdElementsToExetute").jsGrid({
+                width: "950px",
+                height: "100%",
+                editing: true,
+                inserting: true,
+                fields: [
+                            { 
+                                name: "element", 
+                                title: "Element",
+                                type: "select", 
+                                items: nodesArr, 
+                                valueField: "id", 
+                                textField: "label"
+                            },
+                            { 
+                                title: "Condition",
+                                name: "condition", 
+                                type: "text",
+                                width: 150,
+                                itemTemplate: function(value, item) {
+
+                                    return chars.encode(value);
+                                }
+                            },
+                            { 
+                                title: "Order", 
+                                name: "order", 
+                                type: "number", 
+                                width: 50
+                            },
+                            { 
+                                type: "control" 
+                            }
+                        ]
+            });
+        }
+});
+</script>
+
+<div id="ElementsToExetuteWrapper" style="width:100%;height:100%;">
+    <div id="divElementsInfo"></div>
+
+    <button style="margin-left: 870px" id="btnCloseElementsToExetute" >X</button>
+    <div id="grdElementsToExetute" ></div>
+</div>

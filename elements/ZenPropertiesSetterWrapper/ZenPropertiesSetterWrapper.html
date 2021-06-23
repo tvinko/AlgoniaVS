@@ -1,0 +1,34 @@
+﻿<script>
+    SetNameProperty(_diagram);
+    //SetOperatorProperty();
+    SetInputElementProperty(_diagram, 'PROPS_2_SET', '', 'input');
+    SetCheckBoxElementProperty(_diagram, 'PRINT_CODE', '0', '1');
+
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveInputProperty(h, 'PROPS_2_SET');
+        SaveCheckboxProperty(h, 'PRINT_CODE', '1', '0');
+        return h;
+    }
+
+    createPropertyDialogClickEvent('elements/ZenPropertiesSetterWrapper/ZenPropertiesSetterDialog.html');
+</script>
+
+<div id="dialog-form" title="Properties setter">
+    <p>ML Context</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+    <button class="button tiny radius expand secondary open-command-dialog ">Properties to set</button>
+    <div><input type="checkbox" id="PRINT_CODE"><label>Print code</label></div>
+    <input type="hidden" id="PROPS_2_SET" />
+</div>
+

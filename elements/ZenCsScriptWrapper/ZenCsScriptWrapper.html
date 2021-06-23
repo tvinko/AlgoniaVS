@@ -1,0 +1,65 @@
+﻿<div id="dialog-form" title="Cloud properties">
+    <p>Script </p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <input type="hidden" id="SCRIPT_TEXT">
+    <input type="hidden" id="SCRIPT_ARGS">
+    <input type="hidden" id="__ARG__">
+
+    <button class="button tiny radius expand secondary open-command-dialog-cs-code ">Add code</button>
+    <button class="button tiny radius expand secondary open-command-dialog-cs-args">Add args</button>
+    <div><input type="checkbox" id="DEBUG"><label>Debug</label></div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        SetNameProperty(_diagram);
+        //SetOperatorProperty();
+        SetCheckBoxElementProperty(_diagram, 'DEBUG', '0', '1');
+
+        if (GetElementProperty(_diagram, 'SCRIPT_TEXT') != null)
+            $('#SCRIPT_TEXT').val(chars.decode(GetElementProperty(_diagram, 'SCRIPT_TEXT')));
+
+        if (GetElementProperty(_diagram, 'SCRIPT_ARGS') != null)
+            $('#SCRIPT_ARGS').val(chars.decode(GetElementProperty(_diagram, 'SCRIPT_ARGS')));
+
+        createPropertyDialogClickEvent('elements/ZenCsScriptWrapper/ZenCsScriptWrapperDialog.html',
+            '.open-command-dialog-cs-code');
+
+        createPropertyDialogClickEvent('elements/ZenCsScriptWrapper/ZenCsScriptWrapperArgsDialog.html',
+            '.open-command-dialog-cs-args');
+        
+        SetInputElementProperty(_diagram, '__ARG__', '', 'input');
+    });
+
+    function save(code) {
+        $('#SCRIPT_TEXT').val(code);
+        _diagram.getSelectedNodes()[0].settings.elementProperties = SaveProperties();
+    }
+
+    function saveArgs(args) {
+        $('#SCRIPT_ARGS').val(args);
+        _diagram.getSelectedNodes()[0].settings.elementProperties = SaveProperties();
+    }
+
+    function SaveProperties() {
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        
+        var h = {};
+        SaveCheckboxProperty(h, 'DEBUG', '1', '0');
+        SaveInputPropertyEncoded(h, 'SCRIPT_TEXT');
+        SaveInputPropertyEncoded(h, 'SCRIPT_ARGS');
+        SaveInputProperty(h, '__ARG__');
+        return h;
+    }
+</script>

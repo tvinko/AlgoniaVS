@@ -1,0 +1,120 @@
+﻿<script>
+
+function SaveProperties() {
+    var h = {};
+    SaveNameProperty(_diagram);
+    //SaveOperatorProperty();
+    
+    SaveInputPropertyEncoded(h, 'SERVER');
+    SaveInputPropertyEncoded(h, 'SQL_STATEMENT');
+    SaveInputProperty(h, 'STORED_PROCEDURE');
+    SaveInputProperty(h, 'COMMAND_TYPE');
+    SaveInputProperty(h, 'SQLSERVER_PARAMETERS');
+    SaveInputProperty(h, 'DATABASE');
+    SaveInputProperty(h, 'UID');
+    SaveInputProperty(h, 'PASSWORD');
+    SaveInputProperty(h, '_CACHE_');
+    SaveInputProperty(h, 'PORT');
+    SaveCheckboxProperty(h, 'DO_DEBUG', '1', '0');
+
+    return h;
+}
+
+$(document).ready(function() {
+    SetNameProperty(_diagram);
+    //SetOperatorProperty();
+    SetInputElementProperty(_diagram, 'COMMAND_TYPE', '1', 'select');
+    SetInputElementProperty(_diagram, 'STORED_PROCEDURE', '');
+    SetInputElementPropertyDecoded(_diagram, 'SERVER', '');
+    SetInputElementProperty(_diagram, 'PORT', '');
+    SetInputElementProperty(_diagram, '_CACHE_', '');
+    SetInputElementProperty(_diagram, 'DATABASE', '');
+    SetInputElementProperty(_diagram, 'UID', '');
+    SetInputElementProperty(_diagram, 'PASSWORD', '');
+    SetInputElementPropertyDecoded(_diagram, 'SQL_STATEMENT', '');
+    SetInputElementProperty(_diagram, 'SQLSERVER_PARAMETERS', '');
+    SetCheckBoxElementProperty(_diagram, 'DO_DEBUG', '1', '1');
+
+    $('#COMMAND_TYPE').on('change', function () {
+            ShowHideDataField($(this).val());
+    });
+
+    ShowHideDataField($("#COMMAND_TYPE").val());
+
+    createPropertyDialogClickEvent('elements/ZenSqlServerWrapper/ZenSqlServerStatement.html',
+                                        '.open-command-dialog-sql-statement');
+
+    createPropertyDialogClickEvent('elements/ZenSqlServerWrapper/ZenSqlServerParameters.html',
+        	                            '.open-command-dialog-sp-parameters');
+});
+
+function saveSqlScript(code) {
+    $('#SQL_STATEMENT').val(code);
+}
+
+function ShowHideDataField(commandType) {
+    if (commandType == '4') {
+        $("#divSpParameters").show();
+        $("#divSqlStatement").hide();
+    }
+    else {
+        $("#divSpParameters").hide();
+        $("#divSqlStatement").show();
+    }
+}
+
+</script>
+
+<div id="divSqlServerParametersDialog" />
+<div id="dialog-form" title="SqlServer properties">
+    <p>SqlServer</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <label for="SERVER">Server</label>
+    <input type="text" name="SERVER" id="SERVER" class="text ui-widget-content ui-corner-all">
+
+    <label for="DATABASE">Database</label>
+    <input type="text" name="DATABASE" id="DATABASE" class="text ui-widget-content ui-corner-all">
+
+    <label for="UID">Database username</label>
+    <input type="text" name="UID" id="UID" class="text ui-widget-content ui-corner-all">
+
+    <label for="PASSWORD">Password</label>
+    <input type="password" name="PASSWORD" id="PASSWORD" class="text ui-widget-content ui-corner-all">
+
+    <!--
+    <label for="PORT">Port</label>
+    <input type="text" name="PORT" id="PORT" class="text ui-widget-content ui-corner-all">
+        -->
+    <label for="COMMAND_TYPE">Command Type</label>
+    <select id="COMMAND_TYPE" style="width: 137px;">
+        <option value="1">SQL Server Text</option>
+        <option value="4">Stored Procedure</option>
+    </select>
+
+    <div id="divSqlStatement">
+        <label for="SQL_STATEMENT">Sql statement</label>
+        <textarea type="text" name="SQL_STATEMENT" id="SQL_STATEMENT" class="hide text ui-widget-content ui-corner-all"></textarea>
+        <button class="button tiny radius expand secondary open-command-dialog-sql-statement ">SQL Statement</button>
+    </div>
+
+    <div id="divSpParameters">
+        <label for="STORED_PROCEDURE">Stored procedure</label>
+        <input type="text" name="STORED_PROCEDURE" id="STORED_PROCEDURE" class="text ui-widget-content ui-corner-all">
+
+        <button class="button tiny radius expand secondary open-command-dialog-sp-parameters ">SP parameters</button>
+    </div>
+
+    
+    <label for="_CACHE_">Cache</label>
+    <input name="_CACHE_" id="_CACHE_" class="text ui-widget-content ui-corner-all">
+
+    <input type="checkbox" id="DO_DEBUG"><label>Print output</label>

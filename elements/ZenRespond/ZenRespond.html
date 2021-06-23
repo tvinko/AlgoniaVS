@@ -1,0 +1,41 @@
+﻿<script>
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveInputProperty(h, 'APIS');
+        SaveInputProperty(h, '_LOOP_BLOCKER_');
+        SaveInputProperty(h, 'URL');
+        return h;
+    }
+
+    $(document).ready(function() {
+        SetNameProperty(_diagram);
+        //SetOperatorProperty();
+        SetInputElementProperty(_diagram, 'APIS', '', 'input');
+        SetInputElementProperty(_diagram, 'URL', '', 'input');
+        SetInputElementProperty(_diagram, '_LOOP_BLOCKER_', '1', 'input');
+        createPropertyDialogClickEvent('elements/ZenRespond/ZenRespondDialog.html',
+            '.open-command-dialog-responder');
+    });
+</script>
+
+<div id="dialog-form" title="Start properties">
+    <p>Responder</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <label for="URL">URL</label>
+    <input type="text" name="URL" id="URL" class="text ui-widget-content ui-corner-all">
+
+    <button class="button tiny radius expand secondary open-command-dialog-responder ">Register exec nodes</button>
+    <input type="hidden" id="APIS" />
+    <input type="hidden" id="_LOOP_BLOCKER_">
+</div>

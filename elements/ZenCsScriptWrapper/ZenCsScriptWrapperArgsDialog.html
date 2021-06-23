@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Editor</title>
+
+</head>
+
+<body>
+    <div id="divElementsInfo"></div>
+
+    <div id="cs-args-table" style="margin-top: 85px;"></div>
+    <button id='btnSaveCsArgs' type="button">Save</button>
+    <button id='btnCancelCsArgs' type="button">Cancel</button>
+    <button id='add-cs-prop' type="button">Add property</button>
+    
+    <script>
+        $(document).ready(function () {
+            $("#divElementsInfo").load("html_includes/elements_info.html", function (data) {
+                closeNav();
+                var isJSON = require('is-json');
+
+                if (GetElementProperty(_diagram, 'SCRIPT_ARGS') == null ||
+                    GetElementProperty(_diagram, 'SCRIPT_ARGS') == '' ||
+                    !isJSON(chars.decode(GetElementProperty(_diagram, 'SCRIPT_ARGS')))
+                ) {
+
+                    $('#SCRIPT_ARGS').val(JSON.stringify([
+                        { name: "Property 1", value: "Prop 1 val", description: "description 1" },
+                        { name: "Property 2", value: "Prop 2 val", description: "description 2" },
+                    ]));
+                }
+
+                var Tabulator = require('tabulator-tables');
+                var table = new Tabulator("#cs-args-table", {
+                    data: JSON.parse($('#SCRIPT_ARGS').val()),           //load row data from array
+                    layout: "fitColumns",      //fit columns to width of table
+                    responsiveLayout: "hide",  //hide columns that dont fit on the table
+                    tooltips: true,            //show tool tips on cells
+                    addRowPos: "bottom",          //when adding a new row, add it to the top of the table
+                    history: true,             //allow undo and redo actions on the table
+                    paginationSize: 50,         //allow 7 rows per page of data
+                    movableColumns: true,      //allow column order to be changed
+                    resizableRows: true,       //allow row order to be changed
+                    movableRows: true,
+                    /*initialSort: [             //set the initial sort order of the data
+                        { column: "name", dir: "asc" },
+                    ],*/
+                    columns: [                 //define the table columns
+                        { title: "Name", field: "name", editor: "input" },
+                        { title: "Value", field: "value", editor: "input" },
+                        { title: "Description", field: "description", editor: "input" },
+                        {
+                            formatter: "buttonCross", frozen: true, align: "center", title: "del", headerSort: false, cellClick: function (e, cell) {
+                                if (confirm('Are you sure you want to delete this property?'))
+                                    cell.getRow().delete();
+                            }
+                        }
+                    ],
+                });
+
+                $('#btnSaveCsArgs').on('click', function () {
+                    var arr = [];
+                    $.each(table.rowManager.rows, function (key, wire) {
+                        arr.push(wire.data);
+                    });
+                    saveArgs(JSON.stringify(arr));
+                    showDivs(_zen_divs, ['#canvas', '#main', '#propertiesSidebar', '#divSelectElements', '#divSelectTemplates']);
+                });
+
+                $('#btnCancelCsArgs').on('click', function () {
+                    showDivs(_zen_divs, ['#canvas', '#main', '#propertiesSidebar', '#divSelectElements', '#divSelectTemplates']);
+                });
+
+                $("#add-cs-prop").click(function () {
+                    table.addRow({});
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

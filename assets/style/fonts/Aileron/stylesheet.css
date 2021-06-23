@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'aileronbold';
+    src: url('aileron-bold_0-webfont.eot');
+    src: url('aileron-bold_0-webfont.eot?#iefix') format('embedded-opentype'),
+    url('aileron-bold_0-webfont.woff') format('woff'),
+    url('aileron-bold_0-webfont.ttf') format('truetype'),
+    url('aileron-bold_0-webfont.svg#aileronbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+@font-face {
+    font-family: 'aileronregular';
+    src: url('aileron-regular_0-webfont.eot');
+    src: url('aileron-regular_0-webfont.eot?#iefix') format('embedded-opentype'),
+    url('aileron-regular_0-webfont.woff') format('woff'),
+    url('aileron-regular_0-webfont.ttf') format('truetype'),
+    url('aileron-regular_0-webfont.svg#aileronregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'aileronsemibold';
+    src: url('aileron-semibold_0-webfont.eot');
+    src: url('aileron-semibold_0-webfont.eot?#iefix') format('embedded-opentype'),
+    url('aileron-semibold_0-webfont.woff') format('woff'),
+    url('aileron-semibold_0-webfont.ttf') format('truetype'),
+    url('aileron-semibold_0-webfont.svg#aileronsemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'aileronlight';
+    src: url('aileron-light_0-webfont.eot');
+    src: url('aileron-light_0-webfont.eot?#iefix') format('embedded-opentype'),
+         url('aileron-light_0-webfont.woff') format('woff'),
+         url('aileron-light_0-webfont.ttf') format('truetype'),
+         url('aileron-light_0-webfont.svg#aileronlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

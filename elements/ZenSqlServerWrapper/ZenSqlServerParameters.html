@@ -1,0 +1,30 @@
+﻿<div class="row collapse input-group text-medium table-vertical-insert" data-insert-validation>
+
+    <div class="columns large-5">
+        <div class="row collapse">
+            <input data-template="input" data-label="@Paramter Name" type="text" id="ParameterName">
+        </div>
+    </div>
+
+    <div class="columns large-5">
+        <div class="row collapse">
+            <input data-template="input" data-label="@Paramter Value" class="data-filter" type="text" id="ParameterValue" >
+        </div>
+    </div>
+
+    <!-- ADD Button -->
+    <div class="columns large-2 text-center full-height ">
+        <div data-template="addButton"></div>
+    </div>
+</div>
+
+<section class="command-table-wrapper ">
+    <table role="grid" class="display" id="SqlServerParametersTable"></table>
+</section>
+
+<script src="../../../../../assets/core/js/module.dialog.table.js"></script>
+<script type="text/javascript">
+    moduleDialogTable.SQLServerParamters();
+</script>
+
+

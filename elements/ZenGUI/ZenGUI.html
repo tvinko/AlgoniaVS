@@ -1,0 +1,47 @@
+﻿<script>
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveCheckboxProperty(h, 'DEBUG', '1', '0');
+        SaveInputProperty(h, '_LOOP_BLOCKER_');
+        SaveInputProperty(h, '__ARG__');
+        SaveInputProperty(h, 'NODES_TO_EXECUTE');
+        SaveInputProperty(h, 'WEB_ROOT');
+        return h;
+    }
+
+    $(document).ready(function () {
+        SetNameProperty(_diagram);
+        SetCheckBoxElementProperty(_diagram, 'DEBUG', '0', '1');
+        SetInputElementProperty(_diagram, '_LOOP_BLOCKER_', '1', 'input');
+        SetInputElementProperty(_diagram, '__ARG__', '', 'input');
+        SetInputElementProperty(_diagram, 'NODES_TO_EXECUTE', '', 'input');
+        SetInputElementProperty(_diagram, 'WEB_ROOT', '', 'input');
+    });
+</script>
+
+<div id="dialog-form" title="ML Context properties">
+    <p>GUI</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+    
+    <label for="WEB_ROOT">Web root</label>
+    <input type="text" id="WEB_ROOT">
+
+    <label for="NODES_TO_EXECUTE">Nodes to execute</label>
+    <input type="text" id="NODES_TO_EXECUTE">
+
+    <br />
+    <div><input type="checkbox" id="DEBUG"><label>Debug</label></div>
+    <input type="hidden" id="__ARG__">
+    <input type="hidden" id="_LOOP_BLOCKER_">
+    
+</div>

@@ -1,0 +1,9 @@
+{
+    "name": "Elements executer",
+    "file": "ZenElementsExecuterWrapper",
+    "implementation": "ZenElementsExecuterWrapper",
+    "author": "TomazV",
+    "author_email": "tv@algonia.net",
+    "version": "1.0.0",
+    "isStandardNode": 1
+}

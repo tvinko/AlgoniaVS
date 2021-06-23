@@ -1,0 +1,34 @@
+﻿<script>
+
+    $(document).ready(function() {
+        SetNameProperty(_diagram);
+        //SetOperatorProperty();
+        SetInputElementProperty(_diagram, 'PARENT_NODE_ID', '', 'input');
+    });
+
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveInputProperty(h, 'PARENT_NODE_ID');
+        return h;
+    }
+</script>
+
+<div id="dialog-form" title="Start properties">
+    <p>Stop</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+    
+    <label for="PARENT_NODE_ID">Result node</label>
+    <input id="PARENT_NODE_ID" style="width: 137px;"></select>
+
+</div>
+

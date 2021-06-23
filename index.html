@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title id="txtTitle"></title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    
+    <link rel="stylesheet" href="assets/scripts/jquery-ui-1.12.1/jquery-ui.css">
+    
+    <script src="assets/scripts/jquery-1.12.4/jquery-1.12.4.js"></script>
+    <script src="assets/scripts/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <script src="assets/scripts/globals.js"></script>
+    <script src="main.js"></script>
+    <script src="assets/scripts/helpers.js"></script>
+    <script src="assets/scripts/elementProperties.js"></script>
+    <script src="assets/scripts/app.js"></script>
+    <script src="assets/scripts/app.dockers.js"></script>
+    <script type="text/javascript" src="assets/scripts/flowdesigner/flowdesigner.js"></script>
+    <script type="text/javascript" src="assets/scripts/flowdesigner/connector.js"></script>
+    <script type="text/javascript" src="assets/scripts/flowdesigner/wire.js"></script>
+    <script type="text/javascript" src="assets/scripts/flowdesigner/node.js"></script>
+    <script type="text/javascript" src="assets/scripts/flowdesigner/diagram.js"></script>
+    
+    <script type="text/javascript" src="assets/scripts/paper/paper-js/paper-full.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/paper/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/paper/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+
+    <script>if (window.module) module = window.module;</script>
+    <link rel="stylesheet" type="text/css" href="assets/style/style.css" />
+    <link rel="stylesheet" href="assets/style/common/bower_components/foundation/scss/foundation.css" media="all" />
+    <link rel="stylesheet" href="assets/style/icons/font-awesome/css/font-awesome.min.css" />
+
+    <script src="assets/scripts/app.flowdesigner.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="assets/scripts/jsGrid/jsgrid.css" />
+    <link rel="stylesheet" type="text/css" href="assets/scripts/jsGrid/theme.css" />
+    <script src="assets/scripts/jsGrid/db.js"></script>
+    <script src="assets/scripts/jsGrid/jsgrid.core.js"></script>
+    <script src="assets/scripts/jsGrid/jsgrid.load-indicator.js"></script>
+    <script src="assets/scripts/jsGrid/jsgrid.load-strategies.js"></script>
+    <script src="assets/scripts/jsGrid/jsgrid.sort-strategies.js"></script>
+    <script src="assets/scripts/jsGrid/jsgrid.field.js"></script>
+    <script src="assets/scripts/jsGrid/fields/jsgrid.field.text.js"></script>
+    <script src="assets/scripts/jsGrid/fields/jsgrid.field.number.js"></script>
+    <script src="assets/scripts/jsGrid/fields/jsgrid.field.select.js"></script>
+    <script src="assets/scripts/jsGrid/fields/jsgrid.field.checkbox.js"></script>
+    <script src="assets/scripts/jsGrid/fields/jsgrid.field.control.js"></script>
+
+    <link href="assets/scripts/tabulator-tables/4.8.2/tabulator_modern.min.css" rel="stylesheet">
+    <script src="assets/scripts/tabulator-tables/4.8.2/tabulator.min.js"></script>
+
+  </head>
+  <body>
+  <div id="propertiesSidebar" class="sidebar" />
+</div>
+
+<div id="settingsContainer" style="width:100%;height:100%;display:none">
+    <button id='btnSettingsCancel' type="button">Cancel</button>
+    <button id='btnSettingsSave' type="button">Save</button>
+    <div id="divSettingsContent" style="width:100%;height:100%;margin:30px">
+        <div>NetCore path:
+            <p><input id="txtSettings_NetCore_Path" placeholder="NetCore SDK path..." style="width:400px" > <button id="btnSettings_NetCore_Path" type="button" style="margin-left: 10px;">...</button> </p>
+        </div>
+
+        <div>Packages path Python 36
+          <p><input id="txtSettings_Python_PackagesPath36" placeholder="Packages 3.6 path..." style="width:400px" ></p>
+        </div>
+        
+        <div>Packages path Python 37
+          <p><input id="txtSettings_Python_PackagesPath37" placeholder="Packages 3.7 path..." style="width:400px" ></p>
+        </div>
+
+        <div>Packages path Python 38
+          <p><input id="txtSettings_Python_PackagesPath38" placeholder="Packages 3.8 path..." style="width:400px" ></p>
+        </div>
+
+        <div>Docker image name
+          <p><input id="txtSettings_Docker_ImageName" placeholder="algonia:py36..." style="width:400px" ></p>
+        </div>
+        <div>Docker container name
+          <p><input id="txtSettings_Docker_ContainerName" placeholder="algonia_py36..." style="width:400px" ></p>
+        </div>
+        <div>
+            <button id="btnSettings_Docker_ModifyScript" type="button">Modify Docker Script</button>
+        </div>
+    </div>
+</div>
+
+<div id="logContainer" style="width:100%;height:100%;display:none">
+    <button id='btnCloseLog' type="button">Close</button>
+    <button id='btnStopTemplate' type="button">Stop Engine</button>
+    <!--
+    <button id='btnDebugStart' type="button">Start debug</button>
+    <button id='btnDebugStepOver' type="button">Step over</button>
+    <button id='btnDebugEnd' type="button">End debug</button>
+  -->
+    <div id="divLogContent" style="width:100%;height:100%;overflow-y: scroll;"></div>
+</div>
+
+<div id="dialogsContainer" style="width:100%;height:100%;display:none"></div>
+<div id="main">
+    <canvas id="canvas" style="display: none;" resize style="border: 1px solid #000;"></canvas>
+</div>
+
+<div id='divSelectElements' style="display: none;">
+  <button id='btnSelectElements' type="button">Select</button>
+  <button id='btnCancelSelectElements' type="button">Cancel</button>
+  <div id="divElementsList" ></div>
+</div>
+
+<div id='divSelectTemplates' style="display: none;">
+  <div id="divTemplatesList" ></div>
+</div>
+
+<div id='divSelectViews' style="display: none;">
+  <button id='btnAddView' type="button">Add</button>
+  <div id="divViewsList" ></div>
+</div>
+
+</body>
+<script>
+  function openNav() {
+    document.getElementById("propertiesSidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.getElementById("dialogsContainer").style.marginLeft = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("propertiesSidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("dialogsContainer").style.marginLeft= "0";
+  }
+</script>
+</html>

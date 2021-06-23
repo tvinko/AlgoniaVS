@@ -1,0 +1,68 @@
+﻿<script>
+  $(document).ready(function () {
+    var nodes = _diagram.getNodes();
+    for (var i in nodes) {
+      $("#ARG_NODE").append(
+        '<option value="' +
+          nodes[i].id +
+          '">' +
+          nodes[i].settings.label +
+          "</option>"
+      );
+    }
+
+    SetNameProperty(_diagram);
+    //SetOperatorProperty();
+    SetInputElementProperty(_diagram, "ARG_NODE", "1", "select");
+    SetInputElementProperty(_diagram, "URL", "", "input");
+    SetInputElementProperty(_diagram, "API_KEY", "", "input");
+  });
+
+  function SaveProperties() {
+    var h = {};
+    //SaveOperatorProperty();
+    SaveNameProperty(_diagram);
+    SaveInputProperty(h, "URL");
+    SaveInputProperty(h, "API_KEY");
+    SaveInputProperty(h, "ARG_NODE");
+
+    return h;
+  }
+</script>
+
+<div id="dialog-form" title="Request properties">
+  <p>Request</p>
+
+  <label for="name">Name</label>
+  <input
+    type="text"
+    name="name"
+    id="name"
+    class="text ui-widget-content ui-corner-all"
+  />
+
+  <label for="operator">Operator</label>
+  <select id="operator" style="width: 137px">
+    <option value="&">AND</option>
+    <option value="||">OR</option>
+  </select>
+
+  <label for="URL">URL</label>
+  <input
+    type="text"
+    name="URL"
+    id="URL"
+    class="text ui-widget-content ui-corner-all"
+  />
+
+  <label for="API_KEY">API KEY</label>
+  <input
+    type="text"
+    name="API_KEY"
+    id="API_KEY"
+    class="text ui-widget-content ui-corner-all"
+  />
+
+  <label for="ARG_NODE">Arguments algo</label>
+  <select id="ARG_NODE" style="width: 137px"></select>
+</div>

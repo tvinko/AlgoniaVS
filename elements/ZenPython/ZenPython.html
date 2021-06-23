@@ -1,0 +1,122 @@
+﻿<script>
+
+    function savePyScript(code) {
+        $('#PY_SCRIPT_TEXT').val(code);
+    }
+
+    function saveArgs(args) {
+        $('#PY_CONSTRUCTOR_ARG').val(args);
+        _diagram.getSelectedNodes()[0].settings.elementProperties = SaveProperties();
+    }
+
+    function SaveProperties() {
+        var h = {};
+        //SaveOperatorProperty();
+        SaveNameProperty(_diagram);
+        SaveCheckboxProperty(h, 'DEBUG', '1', '0');
+        SaveInputProperty(h, 'PY_RESULT_TYPE');
+        SaveInputProperty(h, 'PY_CLASS');
+        SaveInputProperty(h, 'PY_FUNCT');
+        SaveInputProperty(h, 'PY_RESULT_TYPE');
+        SaveInputPropertyEncoded(h, 'PY_SCRIPT_TEXT');
+        SaveInputPropertyEncoded(h, 'PY_CONSTRUCTOR_ARG');
+        SaveInputProperty(h, 'PY_VERSION');
+        SaveInputProperty(h, '_LOOP_BLOCKER_');
+        SaveInputProperty(h, '__ARG__');
+
+        switch ($("#PY_VERSION").val()) {
+            case '36':
+                _diagram.getSelectedNodes()[0].settings.implementation = 'ZenPython36';
+                break;
+            case '37':
+                _diagram.getSelectedNodes()[0].settings.implementation = 'ZenPython37';
+                break;
+            case '38':
+                _diagram.getSelectedNodes()[0].settings.implementation = 'ZenPython38';
+                break;
+            case '39':
+                _diagram.getSelectedNodes()[0].settings.implementation = 'ZenPython39';
+                break;
+        }
+        return h;
+    }
+
+    $(document).ready(function () {
+        SetNameProperty(_diagram);
+        //SetOperatorProperty();
+        SetInputElementProperty(_diagram, 'PY_CLASS', '', 'input');
+        SetCheckBoxElementProperty(_diagram, 'DEBUG', '0', '1');
+        SetInputElementProperty(_diagram, 'PY_FUNCT', '', 'input');
+        SetInputElementProperty(_diagram, 'PY_VERSION', '37', 'select');
+        SetInputElementProperty(_diagram, '_LOOP_BLOCKER_', '0', 'select');
+        SetInputElementProperty(_diagram, 'PY_RESULT_TYPE', '0', 'select');
+        SetInputElementProperty(_diagram, '__ARG__', '', 'input');
+        
+        if (GetElementProperty(_diagram, 'PY_CONSTRUCTOR_ARG') != null)
+            $('#PY_CONSTRUCTOR_ARG').val(chars.decode(GetElementProperty(_diagram, 'PY_CONSTRUCTOR_ARG')));
+
+        if (typeof GetElementProperty(_diagram, 'PY_SCRIPT_TEXT') !== typeof undefined)
+            $('#PY_SCRIPT_TEXT').val(chars.decode(GetElementProperty(_diagram, 'PY_SCRIPT_TEXT')));
+        else
+            $('#PY_SCRIPT_TEXT').val('');
+
+        createPropertyDialogClickEvent('elements/ZenPython/ZenPythonDialog.html');
+
+        createPropertyDialogClickEvent('elements/ZenPython/ZenPyScriptArgsDialog.html',
+            '.open-command-dialog-py-args');
+    });
+</script>
+
+<div id="dialog-form" title="ML Context properties">
+    <p>Python</p>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+
+    <label for="operator">Operator</label>
+    <select id="operator" style="width: 137px;">
+        <option value="&">AND</option>
+        <option value="||">OR</option>
+    </select>
+
+    <label for="PY_VERSION">Python Version</label>
+    <select id="PY_VERSION" style="width: 137px;">
+        <option selected="selected" value="36">36</option>
+        <option value="37">37</option>
+        <option value="38">38</option>
+    </select>
+
+    <label for="_LOOP_BLOCKER_">Is Loop Blocker</label>
+    <select id="_LOOP_BLOCKER_" style="width: 137px;">
+        <option selected="selected" value="0">No</option>
+        <option value="1">Yes</option>
+    </select>
+    <br />
+    <br />
+
+    <label for="PY_CLASS">Class name</label>
+    <input id="PY_CLASS" style="width: 137px;"></select>
+
+    <br />
+    <br />
+    <button class="button tiny radius expand secondary open-command-dialog-py-args">Add constructor args</button>
+
+    <label for="PY_FUNCT">Function name</label>
+    <input id="PY_FUNCT" style="width: 137px;"></select>
+
+    <label for="PY_RESULT_TYPE">Result type</label>
+    <select id="PY_RESULT_TYPE" style="width: 137px;">
+        <option selected="selected" value="0">Int</option>
+        <option value="1">String</option>
+    </select>
+
+    <input type="hidden" id="__ARG__">
+    <br />
+    <br />
+
+    <button class="button tiny radius expand secondary open-command-dialog">Add code</button>
+    <div><input type="checkbox" id="DEBUG"><label>Debug</label></div>
+
+    <input type="hidden" id="PY_SCRIPT_TEXT">
+    <input type="hidden" id="PY_CONSTRUCTOR_ARG">
+</div>

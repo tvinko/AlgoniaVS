@@ -1,0 +1,117 @@
+<style type="text/css" media="screen">
+    #editor {
+        margin: auto;
+        position: absolute;
+        top: 0px;
+        bottom: 0;
+        left: 75px;
+        right: 0;
+    }
+
+    #copyElementIdContainer {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-left: 5px;
+    }
+    
+    #spacer {
+        flex: 1;
+    }
+    </style>
+
+<div id="editorWrapper" style="width:100%;height:100%;">
+    <div id='copyElementIdContainer'>
+        <select name="cmbElementLabel" style="height:45px;width:230px;position: absolute;left: 10px;top: 5px;" id="cmbElementLabel"></select>
+        <button id="btnCheckElementID" style="height:45px;width:180px; position: absolute;left: 250px;top: 5px;">Get Id</button>
+        <button id="btnCheckElementResult" style="height:45px;width:180px; position: absolute;left: 440px;top: 5px;">Get result</button>
+        <button id="btnCheckElementProperties" style="height:45px;width:180px;position: absolute;left: 630px;top: 5px;">Get Properties</button>
+        <button id="btnCloseEditor" style="height:45px;position: absolute;right: 10px;top: 5px;">X</button>
+    </div>
+    <div id="editor" style="margin-top: 70px;" name="content" ></div>
+</div>
+
+<script>
+const elementIdClipboardOptions = 
+{
+    type: 'info',
+    buttons: ['OK'],
+    title: 'Element Id',
+    message: 'Element id copied to clipboard!',
+};
+
+const elementResultClipboardOptions = 
+{
+    type: 'info',
+    buttons: ['OK'],
+    title: 'Element Result',
+    message: 'Element result copied to clipboard!',
+};
+
+const elementNotFoundOptions = 
+{
+    type: 'error',
+    buttons: ['OK'],
+    title: 'Element Id',
+    message: 'Element not found!',
+};
+
+$(document).ready(function() 
+{
+    fillElementLabels();
+    $('#btnCheckElementProperties').on('click', function () 
+    {
+        showElementPropertiesDialog();
+    });
+
+    $('#btnCheckElementID').on('click', function () 
+    {
+        copyElementIdToClipboard();
+    });
+
+    $('#btnCheckElementResult').on('click', function () 
+    {
+        copyElementResultToClipboard();
+    });
+
+    function fillElementLabels()
+    {
+        var nodes = _diagram.getNodes();
+        for (var i in nodes) 
+        {
+            $("#cmbElementLabel").append('<option value="' + nodes[i].id + '">' + nodes[i].settings.label + '</option>');
+        }
+    }
+
+    function showElementPropertiesDialog()
+    {
+        var currElement = _diagram.getNodes().find(
+            x => x.id == $('#cmbElementLabel').val());
+        
+        let options = {}
+        options.buttons = ["&OK"]
+        options.message = '';
+
+        for (var j in currElement.settings.elementProperties) 
+        {
+            options.message += j + ': ' + text_truncate(currElement.settings.elementProperties[j],15) + "\n";
+        }
+
+        dialog.showMessageBox(null, options, (response) => {});
+    }
+
+    function copyElementIdToClipboard()
+    {
+        const copy = require('copy-text-to-clipboard');
+        copy($('#cmbElementLabel').val());
+        dialog.showMessageBox(null, elementIdClipboardOptions, (response) => {});
+    }
+
+    function copyElementResultToClipboard()
+    {
+        const copy = require('copy-text-to-clipboard');
+        copy("<result>" + $('#cmbElementLabel').val() + "</result>");
+        dialog.showMessageBox(null, elementResultClipboardOptions, (response) => {});
+    }
+});
+</script>
