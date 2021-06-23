@@ -4,10 +4,13 @@ Seamlessly combine different programming languages and libs visually.
  
 # Table of contents
 
-- [Intruduction](#introduction)
-  - [What is Algonia](what-is-algonia)
-  - [HelloWorld](helloworld)
+- [Introduction](#introduction)
+  - [What is Algonia](#what-is-algonia)
+  - [Hello World](#hello-world)
 - [Architecture](#architecture)  
+  - [Algonia Engine](#algonia-engine)
+  - [Algonia VS](#algonia-vs)
+  - [Algonia Engine Bindings](#algonia-engine-bindings)
 
 # Introduction
 ## What is Algonia
@@ -17,18 +20,18 @@ You can read more about it and check Hello World example [here](https://dev.to/t
 
 
 # Architecture
-Algonia platform contains three main parts:
+Algonia platform contains three main parts.
 
-***Algonia Engine***<br/>
+## Algonia Engine
 Independent executing engine capable of hosting different environments and executing code written in different programming languages.<br/>
 It's a gluing mechanism between your and 3rd party libraries.<br/><br/>
 Check it out [here](https://github.com/tvinko/AlgoniaEngine).<br/><br/>
 
-***Algonia VS***<br/>
+## Algonia VS
 Development tool for combining code visually.<br/>
 You are currently here.<br/><br/>
 
-***Algonia Engine Bindings***<br/>
+## Algonia Engine Bindings
 Algonia Engine is capable to interact and host environments for different programming languages.<br/>
 However, some languages are required to implement standard interface so that communication with Algonia Engine performs flawlessly.
 This is one time task per language.<br/><br/>
